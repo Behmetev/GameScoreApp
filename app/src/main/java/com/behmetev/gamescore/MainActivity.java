@@ -1,5 +1,6 @@
 package com.behmetev.gamescore;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -15,6 +16,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState != null) {
+            score1 = savedInstanceState.getInt("scoreTeam1");
+            score2 = savedInstanceState.getInt("scoreTeam2");
+        }
 
         TextView textViewScore1 = findViewById(R.id.textViewScoreTeam1);
         TextView textViewScore2 = findViewById(R.id.textViewScoreTeam2);
@@ -34,6 +40,17 @@ public class MainActivity extends AppCompatActivity {
                 textViewScore2.setText("" + ++score2);
             }
         });
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("scoreTeam1", score1);
+        outState.putInt("scoreTeam2", score2);
     }
 }
